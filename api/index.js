@@ -2,7 +2,8 @@ import fs from "fs";
 import path from "path";
 
 export default function (req, res, next) {
-  const dir = path.join("./static/media", req.url);
+  const dir = path.join("./static/media", req.query.p);
+  console.log({ dir });
   let stat = fs.lstatSync(dir);
   console.log({ dir, isFile: stat.isFile() });
   if (stat.isFile()) {
@@ -10,7 +11,7 @@ export default function (req, res, next) {
       return res.json([{
         type: 'mp4',
         size: stat.size,
-        name: req.url
+        name: dir
       }]);
     }
     return res.json([]);
@@ -18,16 +19,20 @@ export default function (req, res, next) {
   const files = fs.readdirSync(dir);
   res.json(files.map(f => {
     stat = fs.lstatSync(path.join(dir, f));
+    if (f.startsWith(".")) {
+      return null;
+    }
     if (stat.isDirectory()) {
       return {
         type: 'dir',
-        name: path.join(req.url, f)
+        name: path.join(req.query.p, f)
       }
-    } else if (f.toLowerCase().endsWith(".mp4")) {
+    }
+    if (f.toLowerCase().endsWith(".mp4")) {
       return {
         type: 'mp4',
         size: stat.size,
-        name: path.join(req.url, f)
+        name: path.join(req.query.p, f)
       }
     }
     return null;

@@ -17,7 +17,7 @@
       </div>
       <div v-else>
         <ul>
-          <li v-for="file in files" :key="file.name"><a :href="`?p=${file.name}`">{{ file.name }}</a></li>
+          <li v-for="file in files" :key="file.name"><a :href="`?p=${encodeURIComponent(file.name)}`">{{ file.name }}</a></li>
         </ul>
       </div>
     </v-flex>
@@ -35,8 +35,9 @@ export default {
     }
   },
   async mounted () {
-    const files = await this.$axios.$get(`/api${this.$route.query.p || '/'}`);
-    console.log({ p: this.$route.query.p, files });
+    const path = `https://tani.senomas.com/api?p=${encodeURIComponent(this.$route.query.p || '/')}`;
+    const files = await this.$axios.$get(path);
+    console.log({ path, files });
     if (files.length === 1 && files[0].type !== "dir") {
       this.media = files[0];
     } else {
