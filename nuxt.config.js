@@ -1,7 +1,13 @@
 const colors = require('vuetify/es5/util/colors').default
 
 module.exports = {
-  mode: 'universal',
+  mode: "spa",
+
+  server: {
+    port: 3000,
+    host: "0.0.0.0"
+  },
+
   /*
   ** Headers of the page
   */
@@ -34,6 +40,7 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    "@/plugins/axios"
   ],
   /*
   ** Nuxt.js dev-modules
@@ -46,8 +53,9 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+    ['nuxt-env-shim', {
+      keys: [{ key: 'API_URL', name: 'API_ENDPOINT' }, "API_CLIENT_ID", "API_CLIENT_SECRET"]
+    }],
   ],
   /*
   ** Axios module configuration
@@ -86,7 +94,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
     }
   }
 }

@@ -11,17 +11,19 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "nuxt": "^2.0.0",
+    "@nuxtjs/axios": "^5.3.6",
+    "axios": "^0.19.2",
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
-    "@nuxtjs/axios": "^5.3.6"
+    "nuxt": "^2.0.0",
+    "nuxt-env-shim": "^0.2.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9",
     "@nuxt/typescript-build": "^0.6.0",
     "@nuxtjs/vuetify": "^1.0.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
+    "nodemon": "^1.18.9",
     "prettier": "^1.19.1"
   }
 }

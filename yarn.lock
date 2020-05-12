@@ -5330,6 +5330,11 @@ num2fraction@^1.2.2:
   resolved "https://registry.yarnpkg.com/num2fraction/-/num2fraction-1.2.2.tgz#6f682b6a027a4e9ddfa4564cd2589d1d4e669ede"
   integrity sha1-b2gragJ6Tp3fpFZM0lidHU5mnt4=
 
+nuxt-env-shim@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/nuxt-env-shim/-/nuxt-env-shim-0.2.0.tgz#d6db8ca89baaed1cbfe28d3932ae670bef327d5a"
+  integrity sha512-+pTlbmIpqnMIYBXxoAMV73B+vRlMqgqPXn2Zm2HdzlQ/778Hm7yDu/8s/K0xHxk7o1rSxLiIkmR5XCUU9vIyLg==
+
 nuxt@^2.0.0:
   version "2.12.2"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-2.12.2.tgz#959baa919bfef4adcd9e88f84bc948a49a03edd8"

@@ -6,15 +6,35 @@ export default function (req, res, next) {
   console.log({ dir });
   let stat = fs.lstatSync(dir);
   console.log({ dir, isFile: stat.isFile() });
-  if (stat.isFile()) {
-    if (dir.toLowerCase().endsWith(".mp4")) {
-      return res.json([{
+  const handleFile = (f, fpath) => {
+    console.log({ handleFile: { f, fpath } });
+    if (f.toLowerCase().endsWith(".mp4")) {
+      return {
         type: 'mp4',
         size: stat.size,
-        name: dir
-      }]);
+        name: f,
+        path: fpath
+      }
     }
-    return res.json([]);
+    if (f.toLowerCase().endsWith(".wtt")) {
+      const fn = f.slice(0, -4).split("-");
+      return {
+        type: 'wtt',
+        size: stat.size,
+        name: fn[0],
+        label: fn.length > 1 ? fn[1] : fn[0],
+        path: fpath
+      }
+    }
+    return {
+      type: "file",
+      size: stat.size,
+      name: f,
+      path: fpath
+    }
+  }
+  if (stat.isFile()) {
+    return res.json([handleFile(path.basename(req.query.p), req.query.p)]);
   }
   const files = fs.readdirSync(dir);
   res.json(files.map(f => {
@@ -25,16 +45,10 @@ export default function (req, res, next) {
     if (stat.isDirectory()) {
       return {
         type: 'dir',
-        name: path.join(req.query.p, f)
+        name: f,
+        path: path.join(req.query.p, f)
       }
     }
-    if (f.toLowerCase().endsWith(".mp4")) {
-      return {
-        type: 'mp4',
-        size: stat.size,
-        name: path.join(req.query.p, f)
-      }
-    }
-    return null;
+    return handleFile(f, path.join(req.query.p, f));
   }).filter(f => !!f));
 }
